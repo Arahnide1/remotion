@@ -1,0 +1,89 @@
+<title>Баннеры ЖК «Гвардия»</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Unbounded:wght@600&family=Golos+Text:wght@400;500;600&display=swap">
+<style>
+  /* Layout: a header strip, then one wrapping gallery per version; each banner is shown at native size (scaled down only when wider than the screen). */
+  :root {
+    --bg: #f4f5f8; --surface: #ffffff; --fg: #1b1d24; --muted: #646a7a; --line: #dfe2ea;
+    --accent: #e3362a; --warn-bg: #fff1d6; --warn-fg: #8a5600;
+    --display: "Unbounded", "Arial Black", system-ui, sans-serif;
+    --body: "Golos Text", system-ui, -apple-system, "Segoe UI", sans-serif;
+  }
+  @media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) {
+    --bg: #14161c; --surface: #1d2029; --fg: #eceef4; --muted: #9aa0b2; --line: #2c303c;
+    --accent: #ff5a4b; --warn-bg: #3a2c10; --warn-fg: #f2c46b; color-scheme: dark } }
+  :root[data-theme="dark"] {
+    --bg: #14161c; --surface: #1d2029; --fg: #eceef4; --muted: #9aa0b2; --line: #2c303c;
+    --accent: #ff5a4b; --warn-bg: #3a2c10; --warn-fg: #f2c46b; color-scheme: dark }
+  body { background: var(--bg); color: var(--fg); font-family: var(--body); font-size: 15px; line-height: 1.5;
+    padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); padding-block: 28px 48px; }
+  .wrap { max-width: 1240px; margin: 0 auto; display: grid; gap: 36px; }
+  header { display: grid; gap: 10px; }
+  h1 { font-family: var(--display); font-weight: 600; font-size: clamp(22px, 4vw, 32px); line-height: 1.15; margin: 0; text-wrap: balance; }
+  h1 span { color: var(--accent); }
+  .lead { margin: 0; color: var(--muted); max-width: 68ch; }
+  .bar { display: flex; flex-wrap: wrap; gap: 10px; align-items: center; }
+  button { font: 500 14px var(--body); color: var(--fg); background: var(--surface); border: 1px solid var(--line);
+    border-radius: 8px; padding: 7px 14px; cursor: pointer; }
+  button:hover { border-color: var(--accent); }
+  button:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+  button.primary { background: var(--accent); border-color: var(--accent); color: #fff; }
+  section { display: grid; gap: 16px; }
+  h2 { font-family: var(--display); font-weight: 600; font-size: 17px; margin: 0; letter-spacing: .01em; }
+  h2 small { font-family: var(--body); font-weight: 400; font-size: 14px; color: var(--muted); margin-left: 8px; }
+  .grid { display: flex; flex-wrap: wrap; gap: 24px 20px; align-items: flex-start; }
+  figure { margin: 0; display: grid; gap: 8px; min-width: 0; max-width: 100%; }
+  .frame { overflow: hidden; border-radius: 4px; box-shadow: 0 0 0 1px var(--line); background: var(--surface); }
+  .frame iframe { border: 0; display: block; transform-origin: 0 0; }
+  figcaption { display: flex; gap: 8px; align-items: center; flex-wrap: wrap; font-size: 13px; color: var(--muted); font-variant-numeric: tabular-nums; }
+  figcaption b { color: var(--fg); font-weight: 600; }
+  .pill { font-size: 12px; padding: 1px 8px; border-radius: 999px; background: var(--warn-bg); color: var(--warn-fg); }
+  figcaption button { padding: 2px 10px; font-size: 12px; }
+</style>
+
+<div class="wrap">
+  <header>
+    <h1>ЖК «Гвардия» <span>HTML5</span></h1>
+    <p class="lead">34 анимированных баннера: две версии по 17 размеров. Логотип и плашки появляются по очереди, фото проявляется из размытия, затем по плашкам проходит блик. Внизу каждого баннера дисклеймер о проектной декларации.</p>
+    <div class="bar">
+      <button class="primary" id="replay-all" type="button">Проиграть все заново</button>
+    </div>
+  </header>
+  <div id="sections"></div>
+</div>
+
+<script>
+  const DATA = {"v1": [{"w": 320, "h": 50, "kb": 13.3}, {"w": 320, "h": 100, "kb": 17.6}, {"w": 728, "h": 90, "kb": 31.6}, {"w": 300, "h": 250, "kb": 31.4}, {"w": 300, "h": 300, "kb": 36.1}, {"w": 336, "h": 280, "kb": 40.3}, {"w": 160, "h": 600, "kb": 35.9}, {"w": 240, "h": 400, "kb": 37.6}, {"w": 1000, "h": 120, "kb": 44.2}, {"w": 240, "h": 600, "kb": 48.0}, {"w": 300, "h": 500, "kb": 59.1}, {"w": 480, "h": 320, "kb": 53.6}, {"w": 320, "h": 480, "kb": 55.6}, {"w": 300, "h": 600, "kb": 64.1}, {"w": 970, "h": 250, "kb": 72.1}, {"w": 1080, "h": 607, "kb": 144.6}, {"w": 1080, "h": 1080, "kb": 194.4}], "v2": [{"w": 320, "h": 50, "kb": 12.9}, {"w": 320, "h": 100, "kb": 19.8}, {"w": 728, "h": 90, "kb": 32.8}, {"w": 300, "h": 250, "kb": 36.9}, {"w": 300, "h": 300, "kb": 42.8}, {"w": 336, "h": 280, "kb": 44.7}, {"w": 160, "h": 600, "kb": 48.2}, {"w": 240, "h": 400, "kb": 46.8}, {"w": 1000, "h": 120, "kb": 51.0}, {"w": 240, "h": 600, "kb": 66.5}, {"w": 300, "h": 500, "kb": 66.3}, {"w": 480, "h": 320, "kb": 65.0}, {"w": 320, "h": 480, "kb": 66.0}, {"w": 300, "h": 600, "kb": 75.3}, {"w": 970, "h": 250, "kb": 87.1}, {"w": 1080, "h": 607, "kb": 150.0}, {"w": 1080, "h": 1080, "kb": 240.4}]};
+  const TITLES = { v1: ["Версия 1", "дом на фоне неба"], v2: ["Версия 2", "аэросъёмка"] };
+  const root = document.getElementById("sections");
+  root.style.display = "grid"; root.style.gap = "40px";
+  const frames = [];
+  for (const ver of ["v1", "v2"]) {
+    const sec = document.createElement("section");
+    sec.innerHTML = `<h2>${TITLES[ver][0]}<small>${TITLES[ver][1]}</small></h2><div class="grid"></div>`;
+    const grid = sec.querySelector(".grid");
+    for (const it of DATA[ver]) {
+      const fig = document.createElement("figure");
+      const over = it.kb > 150 ? `<span class="pill">больше 150 КБ</span>` : "";
+      fig.innerHTML = `<div class="frame"><iframe loading="lazy" title="${it.w}×${it.h}" width="${it.w}" height="${it.h}" src="${ver}/${it.w}x${it.h}/index.html"></iframe></div>
+        <figcaption><b>${it.w}×${it.h}</b><span>ZIP ${it.kb.toString().replace(".", ",")} КБ</span>${over}<button type="button">Повтор</button></figcaption>`;
+      const iframe = fig.querySelector("iframe");
+      fig.querySelector("button").addEventListener("click", () => { iframe.src = iframe.src; });
+      frames.push({ fig, iframe, w: it.w, h: it.h });
+      grid.appendChild(fig);
+    }
+    root.appendChild(sec);
+  }
+  function fit() {
+    const avail = root.clientWidth;
+    for (const f of frames) {
+      const s = Math.min(1, avail / f.w, f.w > 700 ? 600 / f.w : 1);
+      f.iframe.style.transform = s < 1 ? `scale(${s})` : "";
+      const box = f.fig.querySelector(".frame");
+      box.style.width = Math.floor(f.w * s) + "px";
+      box.style.height = Math.floor(f.h * s) + "px";
+    }
+  }
+  fit(); addEventListener("resize", fit);
+  document.getElementById("replay-all").addEventListener("click", () => frames.forEach(f => { f.iframe.src = f.iframe.src; }));
+</script>
